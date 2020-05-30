@@ -20,7 +20,7 @@ class DragCircleConst extends DragCircle {
     mouseIsOver() {
         let mouse = createVector(mouseX, -mouseY).sub(this.offSet);
         ellipse(mouseX, mouseY, 10, 10);
-        return mouse.dist(this.pos) <= this.r;
+        return mouse.dist(this.pos) <= this.r + 10;
     }
 
     /**

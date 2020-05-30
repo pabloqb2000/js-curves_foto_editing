@@ -1,4 +1,4 @@
-let extremesLimit;
+let extremesLimit, resetBtn;
 let interpolationType = "linear";
 let points = [];
 
@@ -7,11 +7,12 @@ function setup() {
 	background(32);
 
 	// Create UI elements
-	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Extreme limits");
+	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Extreme limits", null, true);
+	resetBtn = new Button(0,0, width/10, height/30, "Reset", resetPnts);
 
 	// Add extreme points
-	points.push(new DragCircleConst(createVector(0,0), 5));
-	points.push(new DragCircleConst(createVector(width/3,width/3), 5));
+	points.push(new DragCircleConst(createVector(0,0), 4));
+	points.push(new DragCircleConst(createVector(width/3,width/3), 4));
 
 	// Start UI
 	UI.tableWidth = 1;
@@ -32,12 +33,17 @@ function draw() {
 	strokeJoin(ROUND);
 		// Draw grid
 	drawGrid();
-		// Plot functoin
+		// Plot function
 	plot(getInterpolation);
 
 	noStroke();
 	Drag.update();
 	Drag.draw();
+	
+	// Draw result
+	translate(5/12*width, 0);
+		// Draw gradient
+	drawGradient(getInterpolation);
 }
 
 function drawGrid() {
@@ -65,9 +71,8 @@ function drawGrid() {
  * 
  * @param f Real value function to plot
  */
-function plot(f) {
+function plot(f, step=3) {
 	let l = width/3;
-	let step = 3;
 
 	noFill();
 	stroke(86, 210, 227);
@@ -78,4 +83,28 @@ function plot(f) {
 		vertex(x*l, f(x)*l);
 	}
 	endShape();
+}
+
+/**
+ * Draws the result gradient of the given function
+ */
+function drawGradient(f) {
+	let l = width/3/256;
+	let margin = 40;
+
+	noStroke();
+	fill(227, 103, 86);
+	rect(-1, -1 - margin, width/3 + 2, 22);
+	for(let i = 0; i < 256; i++) {
+		fill(f(i/255)*255);
+		rect(l*i, -margin, l, 20);
+	}
+}
+
+// Reset the points in the array
+function resetPnts() {
+	points = [];
+	Drag.elements = [];
+	points.push(new DragCircleConst(createVector(0,0), 6));
+	points.push(new DragCircleConst(createVector(width/3,width/3), 6));
 }

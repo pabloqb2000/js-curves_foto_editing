@@ -8,7 +8,7 @@ function mousePressed() {
 	if(!Drag.mousePressed()) {
 		let mouse = createVector(mouseX - width/6, -mouseY + height/2 + width/6);
 		if(mouse.x >= 0 && mouse.x <= width/3 && mouse.y >= 0 && mouse.y <= width/3) {			
-			let newPt = new DragCircleConst(createVector(mouse.x, mouse.y), 5);
+			let newPt = new DragCircleConst(createVector(mouse.x, mouse.y), 4);
 			points.push(newPt);
 			Drag.selected = newPt;
 		}
