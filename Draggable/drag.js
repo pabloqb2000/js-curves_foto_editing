@@ -1,5 +1,6 @@
 class Drag {
     static elements = [];
+    static selected = null;
 
     /**
      * Adds the new draggable element
@@ -30,13 +31,12 @@ class Drag {
         }
     }
 
-    /**
-     * Update all draggable the elements
+   /**
+     * Update the selected
      */
     static mouseDragged() {
-        for(let e of this.elements) {
-            if(e.draggable)
-                e.dragged();
+        if(Drag.selected != null) {
+            Drag.selected.dragged();
         }
     }
 
@@ -48,5 +48,24 @@ class Drag {
             if(e.clickable)
                 e.clicked();
         }
+    }
+
+    /**
+     * When mouse is down select an element
+     */
+    static mousePressed() {
+        for(let e of this.elements) {
+            if(e.draggable && e.mouseIsOver()){
+                Drag.selected = e;
+                return;
+            }
+        }
+    }
+    
+    /**
+     * When mouse is released deselect the element
+     */
+    static mouseReleased() {
+        Drag.selected = null;
     }
 }

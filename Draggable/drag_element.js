@@ -35,10 +35,8 @@ class DragElement {
      * and perform the on drag action
      */
     dragged() {
-        if(this.mouseIsOver()) {
-            this.pos = createVector(mouseX, mouseY);
-            if(this.onDrag != null) this.onDrag();
-        }
+        this.pos = createVector(mouseX, mouseY);
+        if(this.onDrag != null) this.onDrag();
     }
 
     /**

@@ -76,18 +76,3 @@ function plot(f) {
 	endShape();
 }
 
-function mouseDragged() {
-	UI.mouseDragged();
-	Drag.mouseDragged();
-}
-
-function mousePressed() {
-	UI.mouseClicked();
-	Drag.mouseClicked();
-}
-
-// function keyPressed() {
-//   if(keyCode === 83){
-//
-//   }
-// }
