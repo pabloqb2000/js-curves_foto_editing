@@ -57,9 +57,11 @@ class Drag {
         for(let e of this.elements) {
             if(e.draggable && e.mouseIsOver()){
                 Drag.selected = e;
-                return;
+                return true;
             }
         }
+        Drag.selected = null;
+        return false;
     }
     
     /**

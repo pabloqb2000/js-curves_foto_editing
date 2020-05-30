@@ -1,4 +1,5 @@
 class DragCircleConst extends DragCircle {
+
     /**
      * 
      * @param pos Initial position
@@ -28,12 +29,10 @@ class DragCircleConst extends DragCircle {
      * and perform the on drag action
      */
     dragged() {
-        if(this.mouseIsOver()) {
-            this.pos = createVector(mouseX, -mouseY).sub(this.offSet);
-            this.pos.x = min(max(this.pos.x, 0), this.l);
-            this.pos.y = min(max(this.pos.y, 0), this.l);
-            if(this.onDrag != null) this.onDrag();
-        }
+        this.pos = createVector(mouseX, -mouseY).sub(this.offSet);
+        this.pos.x = min(max(this.pos.x, 0), this.l);
+        this.pos.y = min(max(this.pos.y, 0), this.l);
+        if(this.onDrag != null) this.onDrag();
     }
 
     /**

@@ -1,3 +1,4 @@
+let extremesLimit;
 let interpolationType = "linear";
 let points = [];
 
@@ -6,11 +7,7 @@ function setup() {
 	background(32);
 
 	// Create UI elements
-	//sld = new Slider(start=0, end=255, value=32, 0, 0, width/12, height/60, null, "Background");
-	//btn = new Button(x=0, y=0, width/12, height/30, "Reset", resetValue);
-	//
-	//tggl = new ToggleButton(0,0,width/12,height/30,"Discrete", discretice);
-	//cPicker = new ColorPicker(0,0, width/12, height/30, null, "Color 1");
+	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Extreme limits");
 
 	// Add extreme points
 	points.push(new DragCircleConst(createVector(0,0), 5));
@@ -61,6 +58,13 @@ function drawGrid() {
 	rect(0,0, l, l);
 }
 
+/**
+ * Plot the viven function, function f should be:
+ * 		f: R -> R
+ * The parameter step determines how smooth should the plot be
+ * 
+ * @param f Real value function to plot
+ */
 function plot(f) {
 	let l = width/3;
 	let step = 3;
@@ -75,4 +79,3 @@ function plot(f) {
 	}
 	endShape();
 }
-
