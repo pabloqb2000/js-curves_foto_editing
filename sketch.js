@@ -1,4 +1,4 @@
-let interpolationType = "test";
+let interpolationType = "linear";
 let points = [];
 
 function setup() {
@@ -13,8 +13,8 @@ function setup() {
 	//cPicker = new ColorPicker(0,0, width/12, height/30, null, "Color 1");
 
 	// Add extreme points
-	points.push(new DragCircle(createVector(0,0), 5));
-	points.push(new DragCircle(createVector(width/3,width/3), 5));
+	points.push(new DragCircleConst(createVector(0,0), 5));
+	points.push(new DragCircleConst(createVector(width/3,width/3), 5));
 
 	// Start UI
 	UI.tableWidth = 1;
@@ -36,7 +36,7 @@ function draw() {
 		// Draw grid
 	drawGrid();
 		// Plot functoin
-	plot(getInterpolation());
+	plot(getInterpolation);
 
 	noStroke();
 	Drag.update();
@@ -49,7 +49,7 @@ function drawGrid() {
 
 	// lines
 	strokeWeight(0.5);
-	stroke(100);
+	stroke(180);
 	for(let i = 1; i < 4; i++) {
 		line(i*l/4, 0, i*l/4, l);
 		line(0, i*l/4, l, i*l/4);
@@ -63,7 +63,7 @@ function drawGrid() {
 
 function plot(f) {
 	let l = width/3;
-	let step = 1;
+	let step = 3;
 
 	noFill();
 	stroke(86, 210, 227);
@@ -71,7 +71,7 @@ function plot(f) {
 
 	beginShape();
 	for(let x=0; x <= 1; x += step/l){
-		vertex(x*l, min(1,max(0, f(x)))*l);
+		vertex(x*l, f(x)*l);
 	}
 	endShape();
 }
