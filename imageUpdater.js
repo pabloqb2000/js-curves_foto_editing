@@ -9,7 +9,7 @@ class ImageUpdater {
     constructor(imgs) {
         this.imgList = imgs;
         this.startImg(imgs[0]);
-        this.nPixelsUpdt = 1000;
+        this.nPixelsUpdt = 5000;
     }
 
     /**
@@ -66,28 +66,27 @@ class ImageUpdater {
         if(n==0) return;
 
         for(let j = i*4; j < (i+n)*4; j+=4) {
-            let r = this.img.pixels[j];   
-            let g = this.img.pixels[j+1];   
-            let b = this.img.pixels[j+2];
-            let v = (r+g+b)/255/3;
-            let t = f(v);
+            let r = this.img.pixels[j]/255;   
+            let g = this.img.pixels[j+1]/255;   
+            let b = this.img.pixels[j+2]/255;
 
-            this.newImg.pixels[j]   = r * t/v;
-            this.newImg.pixels[j+1] = g * t/v;   
-            this.newImg.pixels[j+2] = b * t/v;
+            this.newImg.pixels[j]   = f(r)*255;
+            this.newImg.pixels[j+1] = f(g)*255;   
+            this.newImg.pixels[j+2] = f(b)*255;
 
         }
         this.newImg.updatePixels();
 
         this.index += n;
-        if(frameRate() > 45) this.nPixelsUpdt+=50;
-        else this.nPixelsUpdt-=50;
+        if(frameRate() > 45) this.nPixelsUpdt+=25;
+        else this.nPixelsUpdt-=25;
     }
 
     /**
      * Draws the new img
      */
     drawImg() {
-        image(this.newImg, 0, -width/6 - this.newImg.height/2);
+        let overImg = mouseX > 7/12*width && mouseX < 11/12*width && mouseIsPressed;
+        image(overImg ? this.img : this.newImg, 0, -width/6 - this.newImg.height/2);
     }
 }
