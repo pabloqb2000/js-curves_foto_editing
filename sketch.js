@@ -15,7 +15,7 @@ function setup() {
 	]);
 
 	// Create UI elements
-	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Limits", null, true);
+	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Limits", resetIndex, true);
 	resetBtn = new Button(0,0, width/10, height/30, "Reset", resetPnts);
 
 	// Add extreme points
