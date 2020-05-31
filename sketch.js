@@ -123,6 +123,7 @@ function resetPnts() {
 	Drag.elements = [];
 	points.push(new DragCircleConst(createVector(0,0), 4, resetIndex));
 	points.push(new DragCircleConst(createVector(width/3,width/3), 4, resetIndex));
+	resetIndex();
 }
 
 /**

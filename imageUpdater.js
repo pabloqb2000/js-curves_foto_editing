@@ -9,7 +9,7 @@ class ImageUpdater {
     constructor(imgs) {
         this.imgList = imgs;
         this.startImg(imgs[0]);
-        this.nPixelsUpdt = 5000;
+        this.nPixelsUpdt = 1000;
     }
 
     /**
@@ -56,22 +56,32 @@ class ImageUpdater {
     /**
      * Updates some of the pixels of the image acording to the give function
      * The ammount of pixels updated is changed depending on the current frame rate
+     * 
+     * @param f function to apply to the pixels
      */
-    updateImg() {
-        let l = this.newImg.pixels.length;
+    updateImg(f) {
+        let l = this.newImg.pixels.length/4;
         let i = this.index;
         let n = min(this.nPixelsUpdt, l - i);
         if(n==0) return;
-        if(random() < 0.2) console.log(frameRate());
 
-        for(let j = i; j < i+n; j++) {
-            this.newImg.pixels[j] = floor(random()*255);
+        for(let j = i*4; j < (i+n)*4; j+=4) {
+            let r = this.img.pixels[j];   
+            let g = this.img.pixels[j+1];   
+            let b = this.img.pixels[j+2];
+            let v = (r+g+b)/255/3;
+            let t = f(v);
+
+            this.newImg.pixels[j]   = r * t/v;
+            this.newImg.pixels[j+1] = g * t/v;   
+            this.newImg.pixels[j+2] = b * t/v;
+
         }
         this.newImg.updatePixels();
 
         this.index += n;
-        if(frameRate() > 45) this.nPixelsUpdt+=100;
-        else this.nPixelsUpdt-=100;
+        if(frameRate() > 45) this.nPixelsUpdt+=50;
+        else this.nPixelsUpdt-=50;
     }
 
     /**
