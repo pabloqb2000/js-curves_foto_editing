@@ -5,8 +5,8 @@ let origImg;
 let imgUpdater;
 
 let imagesRefs = [
-	'https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 	'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb',
+	'https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 ];
 
 let imagesNames = ["Landscape 1", "Landscape 2"];
@@ -21,7 +21,8 @@ function setup() {
 	// Create UI elements
 	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Limits", resetIndex, true);
 	resetBtn = new Button(0,0, width/10, height/30, "Reset", resetPnts);
-	imgBox = new OptionsBox(imagesNames, height/30);
+	saveBtn = new Button(0,0, width/10, height/30, "Save", () => imgUpdater.save());
+	imgBox = new OptionsBox(imagesNames, height/30, () => imgUpdater.startImg(imgBox.selectedIndex()));
 
 	// Add extreme points
 	points.push(new DragCircleConst(createVector(0,0), 4, resetIndex));

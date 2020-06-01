@@ -8,16 +8,17 @@ class ImageUpdater {
      */
     constructor(imgs) {
         this.imgList = imgs;
-        this.startImg(imgs[0]);
+        this.startImg(0);
         this.nPixelsUpdt = 5000;
     }
 
     /**
      * Loads the image, resizes it and crops it to the right dimensions
      * 
-     * @param name Name of the image to load (shuold be http / https reference)
+     * @param n index of the name of the image in the list
      */
-    startImg(name) {
+    startImg(n) {
+        let name = this.imgList[n];
         this.imgName = name;
         // Load image
         this.img = loadImage(this.imgName, (i) => this.imgLoaded());
@@ -88,5 +89,35 @@ class ImageUpdater {
     drawImg() {
         let overImg = mouseX > 7/12*width && mouseX < 11/12*width && mouseIsPressed;
         image(overImg ? this.img : this.newImg, 0, -width/6 - this.newImg.height/2);
+    }
+
+    /**
+     * Aplies the function to the image in full resolution
+     */
+    save() {
+        alert("Saving image, if original image is large this might take up to a few minutes. Please wait until download message pops up");
+        loadImage(this.imgName, (i) => this.imgApplyAndSave(i, getInterpolation));
+    }
+
+    /**
+     * Once the full resolution image is loaded
+     * apply the function and save the result
+     */
+    imgApplyAndSave(img, f) {
+        // Apply
+        img.loadPixels();
+        for(let i = 0; i < img.pixels.length/4; i++) {
+            let r = img.pixels[i]/255;   
+            let g = img.pixels[i+1]/255;   
+            let b = img.pixels[i+2]/255;
+
+            img.pixels[i]   = f(r)*255;
+            img.pixels[i+1] = f(g)*255;   
+            img.pixels[i+2] = f(b)*255;
+        }
+        img.updatePixels();
+
+        //Save
+        img.save();
     }
 }
