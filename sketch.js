@@ -1,22 +1,27 @@
-let extremesLimit, resetBtn;
+let extremesLimit, resetBtn, imgBox, saveBtn;
 let interpolationType = "linear";
 let points = [];
 let origImg;
 let imgUpdater;
+
+let imagesRefs = [
+	'https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb',
+];
+
+let imagesNames = ["Landscape 1", "Landscape 2"];
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	background(32);
 
 	//Create image updaer
-	imgUpdater = new ImageUpdater([
-		'https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-		'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb',
-	]);
+	imgUpdater = new ImageUpdater(imagesRefs);
 
 	// Create UI elements
 	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Limits", resetIndex, true);
 	resetBtn = new Button(0,0, width/10, height/30, "Reset", resetPnts);
+	imgBox = new OptionsBox(imagesNames, height/30);
 
 	// Add extreme points
 	points.push(new DragCircleConst(createVector(0,0), 4, resetIndex));
