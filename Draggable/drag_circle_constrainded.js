@@ -12,6 +12,8 @@ class DragCircleConst extends DragCircle {
 
         this.offSet = createVector(width/6, -height/2 - width/6);
         this.l = width/3;
+
+        this.dbClickable = true;
     }
 
     /**
@@ -40,5 +42,12 @@ class DragCircleConst extends DragCircle {
      */
     getCPos() {
         return this.pos.copy().div(this.l);
+    }
+
+    /**
+     * If element is doubleClicked call the onDrag method
+     */
+    doubleCliked() {
+        if(this.onDrag != null) this.onDrag();
     }
 }

@@ -70,4 +70,15 @@ class Drag {
     static mouseReleased() {
         Drag.selected = null;
     }
+
+    static mouseDoubleClicked() {
+        for(let e of this.elements) {
+            if(e.dbClickable && e.mouseIsOver()){
+                e.doubleCliked();
+                return e;
+            }
+        }
+        Drag.selected = null;
+        return null;
+    }
 }

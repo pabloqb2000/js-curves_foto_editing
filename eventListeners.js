@@ -29,6 +29,14 @@ function mouseWheel(event) {
 	UI.mouseWheel(event);
 }
 
+function doubleClicked() {
+	if(points.length > 2) {
+		let e = Drag.mouseDoubleClicked();
+		points = points.filter(elem => elem != e);
+		Drag.elements = Drag.elements.filter(elem => elem != e);
+	}
+}
+
 // function keyPressed() {
 //   if(keyCode === 83){
 //

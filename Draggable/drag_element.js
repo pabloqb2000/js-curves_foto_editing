@@ -18,6 +18,7 @@ class DragElement {
         this.onClick = onClick;
 
         this.highlighted = false;
+        this.dbClickable = false;
 
         Drag.addElement(this);
     }
