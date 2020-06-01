@@ -1,8 +1,9 @@
 let addBtn, extremesLimit, resetBtn, imgBox, saveBtn;
-let interpolationType = "linear";
+let interpBox;
 let points = [];
 let origImg;
 let imgUpdater;
+let interpolation;
 
 let imagesRefs = [
 	'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
@@ -13,7 +14,7 @@ let imagesRefs = [
 	'https://images.pexels.com/photos/351448/pexels-photo-351448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 ];
 let usrImgs = 0;
-let imagesNames = ["Landscape", "Mountains lake", "Mountain", "Road", "Beach", "Snowy trees"];
+let imagesNames = ["Landscape", "Mountains", "Mountain", "Road", "Beach", "Snowy"];
 
 function setup() {
 	let c = createCanvas(windowWidth, windowHeight);
@@ -23,19 +24,26 @@ function setup() {
 	imgUpdater = new ImageUpdater(imagesRefs);
 
 	// Create UI elements
-	addBtn = new Button(0,0, width/10, height/30, "Add image", () => navigator.clipboard.readText().then(txt => addImg(txt)));
-	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Limits", resetIndex, true);
-	resetBtn = new Button(0,0, width/10, height/30, "Reset", resetPnts);
-	saveBtn = new Button(0,0, width/10, height/30, "Save", () => imgUpdater.save());
+	addBtn = new Button(0,0, width/16, height/30, "Add img", () => navigator.clipboard.readText().then(txt => addImg(txt)));
+	extremesLimit = new ToggleButton(0,0,width/16,height/30,"Limits", resetIndex, true);
+	saveBtn = new Button(0,0, width/16, height/30, "Save", () => imgUpdater.save());
+	resetBtn = new Button(0,0, width/16, height/30, "Reset", resetPnts);
 	imgBox = new OptionsBox(imagesNames, height/30, () => imgUpdater.startImg(imgBox.selectedIndex()));
-
+	interpBox = new OptionsBox(["Poly", "Linear"], height/30, updateInterp, width/6, height/2 + width/6 + 20);
+	
 	// Add extreme points
 	points.push(new DragCircleConst(createVector(0,0), 4, resetIndex));
 	points.push(new DragCircleConst(createVector(width/3,width/3), 4, resetIndex));
 
+	
+
+	// Create default interpolation
+	updateInterp();
+
 	// Start UI
-	UI.tableWidth = 1;
+	UI.tableWidth = 2;
 	UI.tableHeight = 100;
+	UI.widthMargin = width/100;
 	UI.distrubute();
 }
 
@@ -45,6 +53,8 @@ function draw() {
 	UI.update();
 	UI.draw();
 	
+	// Build parameters for the interpolation
+	interpolation.build();
 
 	// Draw curves
 	translate(width/6, height/2 + width/6);
@@ -55,10 +65,11 @@ function draw() {
 		// Plot function
 	plot(getInterpolation);
 
+	// Draw draggable elements
 	noStroke();
 	Drag.update();
 	Drag.draw();
-	
+
 	// Draw result
 	translate(5/12*width, 0);
 		// Draw gradient
@@ -136,7 +147,7 @@ function addImg(t) {
 		loadImage(t, (img) => {
 			// If succeded loading the image
 			usrImgs++;
-			imgBox.options.push("Usr image " + usrImgs.toString());
+			imgBox.options.push("Image " + usrImgs.toString());
 			imgUpdater.imgList.push(t);	
 			imgBox.selected = imgBox.options[imgBox.options.length - 1];
 			imgBox.onChange();		

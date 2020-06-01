@@ -31,7 +31,7 @@ class UI{
             if(e.visible) {
                 let col = this.distributed % this.tableWidth;
                 let row = floor(this.distributed / this.tableWidth);
-                e.setPos(colWidth*col + this.widthMargin, rowHeight*row + this.heightMargin + (height - width/3)/2);
+                e.setPos(colWidth*col + this.widthMargin, rowHeight*row + (height - width/3)/2);
                 this.distributed += 1;
             }
         }    

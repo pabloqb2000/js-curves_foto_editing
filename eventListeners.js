@@ -11,6 +11,7 @@ function mousePressed() {
 			let newPt = new DragCircleConst(createVector(mouse.x, mouse.y), 4, resetIndex);
 			points.push(newPt);
 			Drag.selected = newPt;
+			resetIndex();
 		}
 	}
 }

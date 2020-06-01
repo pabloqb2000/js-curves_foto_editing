@@ -11,46 +11,37 @@ function getInterpolation(x) {
     points.sort((a, b) => a.getCPos().x - b.getCPos().x);
 
     if(extremesLimit.active && (x < points[0].getCPos().x || x > points[points.length - 1].getCPos().x)) {
-        f = limit;
+        // If limits are active and x is outside the first or last node
+        f = limit(x);
     } else {
-        switch(interpolationType) {
-            case "test":
-                f = testInterpolation;
-                break;
-            case "linear":
-                f = linearInterpolation;
-                break;
-        }
+        // Find the next node and evaluate the interpolation
+        let i = 1;
+        while(points[i].getCPos().x <= x && i < points.length - 1)
+            i++;
+        f = interpolation.eval(x, i);
     }
     
     // Crops the result in [0,1]
-    return min(1,max(0, f(x)));
+    return min(1,max(0, f));
 }
 
 /**
- * Sin interpolation for testing prupouses
+ * Updates the interpolation 
+ * depending on the selected option
  */
-function testInterpolation(x) {
-    return sin(10*x);
+function updateInterp() {
+    switch(interpBox.selected) {
+        case "Poly":
+            interpolation = new PolynomialInterpolation();
+            break;
+        default:
+            interpolation = new LinearInterpolation();
+    }
+    resetIndex();
 }
 
 /**
- * Linear interpolatoion
- */
-function linearInterpolation(x) {
-    let i = 1;
-    while(points[i].getCPos().x <= x && i < points.length - 1)
-        i++;
-        
-    let p1 = points[i - 1].getCPos();
-    let p2 = points[i].getCPos();
-    let m = (p2.y - p1.y) / (p2.x - p1.x);
-    let c = p1.y - m*p1.x;
-    return m*x + c;
-}
-
-/**
- * Limist the given value before and after the first and last nodes
+ * Limits the given value before and after the first and last nodes
  * if called outside that range returns 0
  */
 function limit(x) {
