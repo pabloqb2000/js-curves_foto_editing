@@ -1,24 +1,29 @@
-let extremesLimit, resetBtn, imgBox, saveBtn;
+let addBtn, extremesLimit, resetBtn, imgBox, saveBtn;
 let interpolationType = "linear";
 let points = [];
 let origImg;
 let imgUpdater;
 
 let imagesRefs = [
-	'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb',
-	'https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.pexels.com/photos/1955134/pexels-photo-1955134.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.pexels.com/photos/533923/pexels-photo-533923.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+	'https://images.pexels.com/photos/351448/pexels-photo-351448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 ];
-
-let imagesNames = ["Landscape 1", "Landscape 2"];
+let usrImgs = 0;
+let imagesNames = ["Landscape", "Mountains lake", "Mountain", "Road", "Beach", "Snowy trees"];
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	let c = createCanvas(windowWidth, windowHeight);
 	background(32);
 
 	//Create image updaer
 	imgUpdater = new ImageUpdater(imagesRefs);
 
 	// Create UI elements
+	addBtn = new Button(0,0, width/10, height/30, "Add image", () => navigator.clipboard.readText().then(txt => addImg(txt)));
 	extremesLimit = new ToggleButton(0,0,width/10,height/30,"Limits", resetIndex, true);
 	resetBtn = new Button(0,0, width/10, height/30, "Reset", resetPnts);
 	saveBtn = new Button(0,0, width/10, height/30, "Save", () => imgUpdater.save());
@@ -119,6 +124,26 @@ function drawGradient(f) {
 		fill(f(i/255)*255);
 		rect(l*i, -margin, 2*l, 20);
 	}
+}
+
+/**
+ * Adds an image to the select img box
+ * 
+ * @param t Url of the image to add
+ */
+function addImg(t) {
+	if(t != null && t.length > 7 && t.match("https?://.+\.jpeg|\.jpg|\.png.*") != null) {
+		loadImage(t, (img) => {
+			// If succeded loading the image
+			usrImgs++;
+			imgBox.options.push("Usr image " + usrImgs.toString());
+			imgUpdater.imgList.push(t);	
+			imgBox.selected = imgBox.options[imgBox.options.length - 1];
+			imgBox.onChange();		
+		}); 
+	} else {
+		alert("To add an image copy the URL of an image from internet and click the Add image button, URL should start by http / https and should reference a jpg / png image")
+	} 
 }
 
 /**
