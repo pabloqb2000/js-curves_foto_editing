@@ -42,7 +42,7 @@ class PolynomialInterpolation {
                     (dd[j][i-1] - dd[j-1][i-1]) / (points[j].getCPos().x - points[j-i].getCPos().x));
             }
         }
-        this.divDifs = dd.map(l => l[l.length - 1]);
+        this.divDifs = dd.map(l => l[l.length - 1]).reverse();
     }
 
     /**
@@ -52,14 +52,21 @@ class PolynomialInterpolation {
      * @param nextNode Index of the first node after x value
      */
     eval(x, nextNode) {
-        let r = 0;
-        for(let i = 0; i < this.divDifs.length; i++) {
-            let t = this.divDifs[i];
-            for(let j = 0; j < i; j++) {
-                t *= x - points[j].getCPos().x;
-            }
-            r += t;
+        return this.horner(this.divDifs, x);
+    }
+
+    /**
+     * Applies a variant of horner algorithm
+     * to evaluate the polynomial
+     * @param l List of coefficients 
+     * @param x X value to evaluate
+     */
+    horner(l, x) {
+        let n = l.length;
+        let q = l[0];
+        for(let i = 1; i < n; i++) {
+            q = q*(x - points[n-i-1].getCPos().x) + l[i];
         }
-        return r;
+        return q;
     }
 }

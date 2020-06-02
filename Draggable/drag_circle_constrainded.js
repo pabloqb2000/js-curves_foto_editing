@@ -6,14 +6,22 @@ class DragCircleConst extends DragCircle {
      * @param r Radius of the element
      * @param onDrag Action to perform when the object is dragged
      * @param onClick Action to perform when the object is clicked
+     * @param mouseCoor True if position is given in mouse coordinates
      */
-    constructor(pos, r=15, onDrag=null, onClick=null) {
+    constructor(pos, r=15, onDrag=null, onClick=null, mouseCoor=false) {
         super(pos, r, onDrag, onClick);
 
         this.offSet = createVector(width/6, -height/2 - width/6);
         this.l = width/3;
 
         this.dbClickable = true;
+
+        // Offset and limit the position if on mouse coordinates
+        if(mouseCoor) {
+            this.pos = createVector(mouseX, -mouseY).sub(this.offSet);
+            this.pos.x = min(max(this.pos.x, 0), this.l);
+            this.pos.y = min(max(this.pos.y, 0), this.l);
+        }
     }
 
     /**

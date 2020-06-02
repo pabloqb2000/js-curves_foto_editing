@@ -14,7 +14,7 @@ let imagesRefs = [
 	'https://images.pexels.com/photos/351448/pexels-photo-351448.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
 ];
 let usrImgs = 0;
-let imagesNames = ["Landscape", "Mountains", "Mountain", "Road", "Beach", "Snowy"];
+let imagesNames = ["Views", "Lake", "Rock", "Road", "Beach", "Snowy"];
 
 function setup() {
 	let c = createCanvas(windowWidth, windowHeight);
@@ -34,8 +34,6 @@ function setup() {
 	// Add extreme points
 	points.push(new DragCircleConst(createVector(0,0), 4, resetIndex));
 	points.push(new DragCircleConst(createVector(width/3,width/3), 4, resetIndex));
-
-	
 
 	// Create default interpolation
 	updateInterp();
@@ -147,7 +145,7 @@ function addImg(t) {
 		loadImage(t, (img) => {
 			// If succeded loading the image
 			usrImgs++;
-			imgBox.options.push("Image " + usrImgs.toString());
+			imgBox.options.push("Img " + usrImgs.toString());
 			imgUpdater.imgList.push(t);	
 			imgBox.selected = imgBox.options[imgBox.options.length - 1];
 			imgBox.onChange();		
