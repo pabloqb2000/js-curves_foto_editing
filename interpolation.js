@@ -31,8 +31,17 @@ function getInterpolation(x) {
  */
 function updateInterp() {
     switch(interpBox.selected) {
+        case "Spline":
+            interpolation = new NaturalSplineInterpolation();
+            break;
         case "Poly":
             interpolation = new PolynomialInterpolation();
+            break;
+        case "0s spline":
+            interpolation = new Spline0sInterpolation();
+            break;
+        case "1s spline":
+            interpolation = new Spline1sInterpolation();
             break;
         default:
             interpolation = new LinearInterpolation();

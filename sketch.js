@@ -29,7 +29,7 @@ function setup() {
 	saveBtn = new Button(0,0, width/16, height/30, "Save", () => imgUpdater.save());
 	resetBtn = new Button(0,0, width/16, height/30, "Reset", resetPnts);
 	imgBox = new OptionsBox(imagesNames, height/30, () => imgUpdater.startImg(imgBox.selectedIndex()));
-	interpBox = new OptionsBox(["Poly", "Linear"], height/30, updateInterp, width/6, height/2 + width/6 + 20);
+	interpBox = new OptionsBox(["Spline", "Linear", "Poly", "0s spline", "1s spline"], height/30, updateInterp, width/6, height/2 + width/6 + 20);
 	
 	// Add extreme points
 	points.push(new DragCircleConst(createVector(0,0), 4, resetIndex));
