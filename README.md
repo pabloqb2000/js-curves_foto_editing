@@ -50,7 +50,7 @@ Every interpolation has at least two functions:
 This kind of interpolation creates a linear function between every consecutive pair of nodes.
 #### Polynomial interpolation
 This interpolation calculates the minimum degree polynomial wich goes throw all the nodes. </br>
-To do so it uses the Newton aproach calculating the divided differences table. </br>
+To do so it uses the Newtons aproach calculating the divided differences table. </br>
 To evaluate the final polynomial it uses a small variation of Horners algorithm. </br>
 #### Spline interpolation
 This interpolation implements a natural cubic spline interpolation. </br>
