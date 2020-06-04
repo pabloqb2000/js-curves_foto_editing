@@ -150,5 +150,38 @@ class Spline0sInterpolation extends Spline1sInterpolation{
 }
 
 class NaturalSplineInterpolation extends Spline1sInterpolation{
+    /**
+     * Overrides the way deriavtives are calculated
+     * Calculates a list of derivatives such that 
+     * the polynomial has continous curvature
+     * It also makes curvature be 0 in the extreme points
+     * 
+     * To do so we solve one linear system of ecuations
+     */
+    derivatives() {
+        let n = points.length;
+        let A = Matrix.zeros(n);
+        let v = Vector.fromDim(n);
+        let pts = points.map(p => p.getCPos());
 
+        for(let i = 1; i < n-1; i++) {
+            A.data[i][i-1] = 1/(pts[i].x - pts[i-1].x);
+            A.data[i][i+1] = 1/(pts[i+1].x - pts[i].x);
+            A.data[i][i] = 2*(A.data[i][i-1] + A.data[i][i+1]);
+
+            v.data[i] = 3 * ((pts[i].y - pts[i-1].y) / ((pts[i].x - pts[i-1].x) * (pts[i].x - pts[i-1].x)) +
+                (pts[i+1].y - pts[i].y) / ((pts[i+1].x - pts[i].x) * (pts[i+1].x - pts[i].x)));
+        }
+
+        A.data[0][0] = 2/(pts[1].x - pts[0].x);
+        A.data[0][1] = 1/(pts[1].x - pts[0].x);
+        v.data[0] = 3 * (pts[1].y - pts[0].y) / ((pts[1].x - pts[0].x)**2);
+        
+        A.data[n-1][n-2] = 1/(pts[n-1].x - pts[n-2].x);
+        A.data[n-1][n-1] = 2/(pts[n-1].x - pts[n-2].x);
+
+        v.data[n-1] = 3 * (pts[n-1].y - pts[n-2].y) / ((pts[n-1].x - pts[n-2].x)**2);
+        
+        return A.solve(v).toArray();
+    }
 }
