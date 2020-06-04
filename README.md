@@ -25,7 +25,6 @@ The posible intepolations are:
   - Polynomial
   - 0 derivatives spline
   - 1 derivatives spline
-More information on the different kinds of interpolation can be found later. </br>
 ## Nodes
 #### Add nodes
 To add a node simply click and dragg outside the other nodes
