@@ -65,3 +65,6 @@ To find more information about the <b>awesome</b> library used for this proyect 
 <a href="https://p5js.org/"> https://p5js.org/ </a></br>
 To find more about the <b>natural cubic spline interpolation</b> visit this amazing website <a href="http://blog.ivank.net/interpolation-with-cubic-splines.html">Cubic spline interpolation</a></br>
 The example images used in this proyect come from <a href="https://www.pexels.com/?locale=en-us">pexels.com</a> and they are copyright free.
+
+## Other proyects
+Checkout my other proyects at <a href="https://pabloqb2000.github.io/Math_visualization/">Click math</a>
