@@ -17,7 +17,7 @@ let usrImgs = 0;
 let imagesNames = ["Views", "Lake", "Rock", "Road", "Beach", "Snowy"];
 
 function setup() {
-	textFont("Sarpanch");
+	textFont("Orbitron");
 	let c = createCanvas(windowWidth, windowHeight);
 	background(32);
 
