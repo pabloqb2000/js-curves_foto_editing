@@ -67,4 +67,4 @@ To find more about the <b>natural cubic spline interpolation</b> visit this amaz
 The example images used in this proyect come from <a href="https://www.pexels.com/?locale=en-us">pexels.com</a> and they are copyright free.
 
 ## Other proyects
-Checkout my other proyects at <a href="https://pabloqb2000.github.io/Math_visualization/">Click math</a>
+Checkout my other proyects at <a href="https://pabloqb2000.github.io/Click_math/">Click math</a>
